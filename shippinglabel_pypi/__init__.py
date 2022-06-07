@@ -60,7 +60,7 @@ __license__: str = "MIT License"
 __version__: str = "0.0.0"
 __email__: str = "dominic@davis-foster.co.uk"
 
-__all__ = [
+__all__ = (
 		"get_project_links",
 		"get_metadata",
 		"get_latest",
@@ -71,7 +71,7 @@ __all__ = [
 		"get_sdist_url",
 		"get_wheel_url",
 		"get_wheel_tag_mapping",
-		]
+		)
 
 _session = requests.session()
 atexit.register(_session.close)
@@ -106,7 +106,7 @@ def get_project_links(project_name: str) -> MetadataMapping:
 
 		for url in raw_urls:
 			label, url, *_ = map(str.strip, url.split(','))
-			urls[label] = url
+			urls[label] = url  # pylint: disable=loop-invariant-statement
 
 		if "Home-Page" in meta:
 			urls["Homepage"] = meta["Home-Page"]
@@ -132,7 +132,7 @@ def get_metadata(pypi_name: str) -> Dict[str, Any]:
 	:raises:
 
 		* :exc:`packaging.requirements.InvalidRequirement` if the project cannot be found on PyPI.
-		* :exc:`requests.exceptions.HTTPError` if an error occurs when communicating with PyPI.
+		* :exc:`requests.HTTPError` if an error occurs when communicating with PyPI.
 	"""
 
 	with PyPIJSON(session=_session) as client:
@@ -148,7 +148,7 @@ def get_latest(pypi_name: str) -> str:
 	:raises:
 
 		* :exc:`packaging.requirements.InvalidRequirement` if the project cannot be found on PyPI.
-		* :exc:`requests.exceptions.HTTPError` if an error occurs when communicating with PyPI.
+		* :exc:`requests.HTTPError` if an error occurs when communicating with PyPI.
 	"""
 
 	return str(get_metadata(pypi_name)["info"]["version"])
@@ -208,7 +208,7 @@ def get_pypi_releases(pypi_name: str) -> Dict[str, List[str]]:
 	:raises:
 
 		* :exc:`packaging.requirements.InvalidRequirement` if the project cannot be found on PyPI.
-		* :exc:`requests.exceptions.HTTPError` if an error occurs when communicating with PyPI.
+		* :exc:`requests.HTTPError` if an error occurs when communicating with PyPI.
 	"""
 
 	with PyPIJSON(session=_session) as client:
@@ -224,7 +224,7 @@ def get_releases_with_digests(pypi_name: str) -> Dict[str, List[FileURL]]:
 	:raises:
 
 		* :exc:`packaging.requirements.InvalidRequirement` if the project cannot be found on PyPI.
-		* :exc:`requests.exceptions.HTTPError` if an error occurs when communicating with PyPI.
+		* :exc:`requests.HTTPError` if an error occurs when communicating with PyPI.
 	"""
 
 	with PyPIJSON(session=_session) as client:
