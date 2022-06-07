@@ -33,7 +33,6 @@ base-classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: System :: Archiving :: Packaging",
-    "Typing :: Typed",
 ]
 python-versions = [ "3.6", "3.7", "3.8", "3.9", "3.10",]
 python-implementations = [ "CPython", "PyPy",]
