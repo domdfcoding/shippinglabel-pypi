@@ -1,0 +1,41 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
+---
+modname: 'shippinglabel-pypi'
+copyright_years: '2022'
+author: 'Dominic Davis-Foster'
+email: 'dominic@davis-foster.co.uk'
+username: 'domdfcoding'
+version: '0.0.0'
+license: 'MIT'
+short_desc: 'Shippinglabel extension for interacting with PyPI.'
+
+enable_docs: false
+use_whey: true
+min_coverage: 95
+
+python_versions:
+ - '3.6'
+ - '3.7'
+ - '3.8'
+ - '3.9'
+ - "3.10"
+ - 3.11-dev
+ - pypy36
+ - pypy37
+ - pypy38
+ - pypy39
+
+conda_channels:
+ - conda-forge
+
+keywords:
+ - shippinglabel
+ - packaging
+ - requirements
+ - pypi
+
+classifiers:
+ - 'Development Status :: 5 - Production/Stable'
+ - 'Intended Audience :: Developers'
+ - 'Topic :: Software Development :: Libraries :: Python Modules'
+ - "Topic :: System :: Archiving :: Packaging"

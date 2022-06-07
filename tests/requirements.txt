@@ -1,0 +1,14 @@
+apeye[limiter]>=1.0.0
+betamax>=0.8.1
+coincidence>=0.2.0
+consolekit>=1.1.2
+coverage>=5.1
+coverage-pyver-pragma>=0.2.1
+importlib-metadata>=3.6.0
+pip>=21
+pytest>=6.0.0
+pytest-cov>=2.8.1
+pytest-randomly>=3.7.0
+pytest-regressions>=2.0.2
+pytest-rerunfailures>=9.1.1
+pytest-timeout>=1.4.2
