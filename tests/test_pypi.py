@@ -371,9 +371,10 @@ def test_get_wheel_tag_mapping_no_files(name: str, version: str):
 				"domdf_python_tools",
 				"sphinx",
 				pytest.param(
-						"setuptools", 
-						marks=min_version(3.7, reason="Setuptools now only supports Python3.7",
-						)
+						"setuptools", marks=min_version(
+								3.7,
+								reason="Setuptools now only supports Python3.7",
+								)
 						),
 				"whey",
 				"numpy",
