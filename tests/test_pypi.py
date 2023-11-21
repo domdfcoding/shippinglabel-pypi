@@ -1,6 +1,7 @@
 # stdlib
 import gzip
 import re
+import sys
 import tarfile
 import zipfile
 from typing import Union
@@ -367,7 +368,20 @@ def test_get_wheel_tag_mapping_no_files(name: str, version: str):
 		"project",
 		[
 				"pip",
-				"packaging",
+				pytest.param(
+						"packaging",
+						id="packaging_3.6",
+						marks=pytest.mark.skipif(
+								sys.version_info >= (3, 7),
+								reason="Packaging now only supports Python3.7+",
+								)
+						),
+				pytest.param(
+						"packaging", marks=min_version(
+								3.7,
+								reason="Packaging now only supports Python3.7+",
+								)
+						),
 				"domdf_python_tools",
 				"sphinx",
 				pytest.param(
