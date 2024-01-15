@@ -46,7 +46,6 @@ from apeye.url import URL
 from dist_meta.metadata_mapping import MetadataMapping
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
-from packaging.requirements import InvalidRequirement
 from packaging.specifiers import SpecifierSet
 from packaging.tags import Tag, sys_tags
 from packaging.version import Version
@@ -280,29 +279,26 @@ def get_sdist_url(
 		unless ``strict`` is :py:obj:`True`.
 	"""
 
-	releases = get_pypi_releases(str(name))
-	version = str(version)
+	with PyPIJSON(session=_session) as client:
+		metadata = client.get_metadata(str(name), version=str(version))
 
-	if version not in releases:
-		raise InvalidRequirement(f"Cannot find version {version} on PyPI.")
-
-	download_urls = releases[version]
+	download_urls = metadata.urls
 
 	if not download_urls:
 		raise ValueError(f"Version {version} has no files on PyPI.")
 
-	for url in download_urls:
-		if url.endswith(".tar.gz"):
-			return url
+	for url_data in download_urls:
+		if url_data["filename"].endswith(".tar.gz"):
+			return url_data["url"]
 
 	if strict:
 		raise ValueError(f"Version {version} has no sdist on PyPI.")
 
-	for url in download_urls:
-		if url.endswith(".zip"):
-			return url
+	for url_data in download_urls:
+		if url_data["filename"].endswith(".zip"):
+			return url_data["url"]
 
-	return download_urls[0]
+	return download_urls[0]["url"]
 
 
 def get_wheel_url(

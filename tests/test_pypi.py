@@ -261,13 +261,13 @@ def _param(name: str, version: Union[str, Version]):  # noqa: MAN002
 
 @pytest.mark.parametrize("name, version", [_param("greppy", "0.0.0"), _param("domdf_python_tools", "1.2.3")])
 def test_get_sdist_url_no_version(name: str, version: str):
-	with pytest.raises(InvalidRequirement, match="Cannot find version .* on PyPI."):
+	with pytest.raises(InvalidRequirement, match="No such project/version .*"):
 		get_sdist_url(name, version)
 
 
 @pytest.mark.parametrize("name, version", [_param("domdf_python_toolsz", "1.2.3")])
 def test_get_sdist_url_no_project(name: str, version: str):
-	with pytest.raises(InvalidRequirement, match="No such project .*"):
+	with pytest.raises(InvalidRequirement, match="No such project/version .*"):
 		get_sdist_url(name, version)
 
 
