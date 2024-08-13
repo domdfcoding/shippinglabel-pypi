@@ -41,3 +41,6 @@ classifiers:
  - 'Intended Audience :: Developers'
  - 'Topic :: Software Development :: Libraries :: Python Modules'
  - "Topic :: System :: Archiving :: Packaging"
+
+tox_unmanaged:
+ - testenv
