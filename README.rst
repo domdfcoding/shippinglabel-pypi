@@ -99,7 +99,7 @@ shippinglabel-pypi
 	:target: https://github.com/domdfcoding/shippinglabel-pypi/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2024
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2025
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/shippinglabel-pypi
