@@ -6,7 +6,7 @@ import pytest
 import requests
 from _pytest.fixtures import FixtureRequest
 from apeye.url import URL
-from betamax import Betamax  # type: ignore[import]
+from betamax import Betamax  # type: ignore[import-untyped]
 from domdf_python_tools.paths import PathPlus
 from packaging.tags import Tag
 from pytest_regressions.data_regression import RegressionYamlDumper
