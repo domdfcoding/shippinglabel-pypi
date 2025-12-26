@@ -99,7 +99,7 @@ from shippinglabel_pypi import (
 						'ocflib\nDjango\nPyMySQL\n',
 						1,
 						'django>=3.1.5\nocflib>=2020.12.5.10.49\npymysql>=0.10.1\n',
-						id="real_requirements"
+						id="real_requirements",
 						),
 				pytest.param(
 						'bar\npkg-resources==0.0.0\ndocutils\n',
@@ -126,7 +126,7 @@ from shippinglabel_pypi import (
 						'pyreadline @ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"',
 						1,
 						'pyreadline@ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"\n',
-						id="url"
+						id="url",
 						),
 				]
 		)
@@ -142,7 +142,7 @@ def test_bind_requirements(input_s: str, expected_retval: int, output: str, tmp_
 
 def test_bind_requirements_error(tmp_pathplus: PathPlus):
 	path = tmp_pathplus / "requirements.txt"
-	path.write_text('bar\npkg-resources==0.0.0\ndocutils\n', )
+	path.write_text('bar\npkg-resources==0.0.0\ndocutils\n')
 
 	for specifier in operator_symbols:
 		bind_requirements(path, specifier=specifier)
@@ -282,9 +282,8 @@ def test_get_sdist_url_no_sdist(name: str, version: str):
 	with pytest.raises(ValueError, match="Version 3.12.0 has no sdist on PyPI."):
 		get_sdist_url(name, version, strict=True)
 
-	assert get_sdist_url(
-			name, version
-			) == "https://files.pythonhosted.org/packages/1e/80/8470c36703f2fd54882eba1f111c74264b540b1376994a9a87bf81fe931e/protobuf-3.12.0-cp27-cp27m-macosx_10_9_x86_64.whl"
+	protobuf_url = "https://files.pythonhosted.org/packages/1e/80/8470c36703f2fd54882eba1f111c74264b540b1376994a9a87bf81fe931e/protobuf-3.12.0-cp27-cp27m-macosx_10_9_x86_64.whl"
+	assert get_sdist_url(name, version) == protobuf_url
 
 
 @pytest.mark.parametrize(
@@ -337,9 +336,8 @@ def test_get_wheel_url_no_wheels():
 	with pytest.raises(ValueError, match="Version 0.0.1 has no files on PyPI."):
 		get_wheel_url("microsoft", "0.0.1")
 
-	assert get_wheel_url(
-			"greppy", "0.1.3"
-			) == "https://files.pythonhosted.org/packages/c6/a8/ae563011a12812f8efcbbb9385a6451f4d6674d47055e97f95fae6e883d9/greppy-0.1.3.tar.gz"
+	greppy_wheel_url = "https://files.pythonhosted.org/packages/c6/a8/ae563011a12812f8efcbbb9385a6451f4d6674d47055e97f95fae6e883d9/greppy-0.1.3.tar.gz"
+	assert get_wheel_url("greppy", "0.1.3") == greppy_wheel_url
 
 
 @pytest.mark.flaky(reruns=1, reruns_delay=10)
