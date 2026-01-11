@@ -128,7 +128,7 @@ from shippinglabel_pypi import (
 						'pyreadline@ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"\n',
 						id="url",
 						),
-				]
+				],
 		)
 @pytest.mark.usefixtures("cassette")
 def test_bind_requirements(input_s: str, expected_retval: int, output: str, tmp_pathplus: PathPlus):
@@ -293,7 +293,7 @@ def test_get_sdist_url_no_sdist(name: str, version: str):
 				_param("mathematical", "0.4.0"),
 				_param("shippinglabel", Version("0.12.0")),
 				_param("numpy", Version("1.20.3")),
-				]
+				],
 		)
 def test_get_sdist_url(name: str, version: str, advanced_file_regression: AdvancedFileRegressionFixture):
 	advanced_file_regression.check(get_sdist_url(name, version))
@@ -305,7 +305,7 @@ def test_get_sdist_url(name: str, version: str, advanced_file_regression: Advanc
 				_param("domdf_python_tools", "1.0.0"),
 				_param("mathematical", "0.4.0"),
 				_param("shippinglabel", Version("0.12.0")),
-				]
+				],
 		)
 def test_get_wheel_url(name: str, version: str, advanced_file_regression: AdvancedFileRegressionFixture):
 	advanced_file_regression.check(get_wheel_url(name, version))
@@ -348,7 +348,7 @@ def test_get_wheel_url_no_wheels():
 				_param("mathematical", "0.4.0"),
 				_param("shippinglabel", Version("0.12.0")),
 				_param("numpy", Version("1.20.3")),
-				]
+				],
 		)
 def test_get_wheel_tag_mapping(name: str, version: str, advanced_data_regression: AdvancedDataRegressionFixture):
 	tag_url_map, non_wheel_urls = get_wheel_tag_mapping(name, version)
@@ -372,21 +372,23 @@ def test_get_wheel_tag_mapping_no_files(name: str, version: str):
 						marks=pytest.mark.skipif(
 								sys.version_info >= (3, 7),
 								reason="Packaging now only supports Python3.7+",
-								)
+								),
 						),
 				pytest.param(
-						"packaging", marks=min_version(
+						"packaging",
+						marks=min_version(
 								3.7,
 								reason="Packaging now only supports Python3.7+",
-								)
+								),
 						),
 				"domdf_python_tools",
 				"sphinx",
 				pytest.param(
-						"setuptools", marks=min_version(
+						"setuptools",
+						marks=min_version(
 								3.7,
 								reason="Setuptools now only supports Python3.7",
-								)
+								),
 						),
 				"whey",
 				"numpy",
