@@ -179,7 +179,7 @@ def bind_requirements(
 		filename,
 		include_invalid=True,
 		normalize_func=normalize_func,
-		)
+	)
 
 	for req in requirements:
 		if req.url:
