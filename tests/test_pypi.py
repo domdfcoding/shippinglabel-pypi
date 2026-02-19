@@ -241,7 +241,7 @@ def test_get_file_from_pypi(advanced_data_regression: AdvancedDataRegressionFixt
 
 @pytest.mark.usefixtures("module_cassette")
 def test_get_latest():
-	assert get_latest("octocheese") == "0.2.1"
+	assert get_latest("octocheese") == "0.7.0"
 
 
 @pytest.mark.usefixtures("module_cassette")
