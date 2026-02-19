@@ -91,7 +91,7 @@ shippinglabel-pypi
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/shippinglabel-pypi
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/shippinglabel-pypi/v0.1.0.post1
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/shippinglabel-pypi/v0.2.0
 	:target: https://github.com/domdfcoding/shippinglabel-pypi/pulse
 	:alt: GitHub commits since tagged version
 
