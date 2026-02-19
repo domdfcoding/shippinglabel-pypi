@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 # 3rd party
 import pytest
 from coincidence.regressions import AdvancedDataRegressionFixture, AdvancedFileRegressionFixture
-from coincidence.selectors import min_version
+from coincidence.selectors import min_version, only_version
 from domdf_python_tools.paths import PathPlus
 from packaging.requirements import InvalidRequirement
 from packaging.version import Version
@@ -123,10 +123,18 @@ from shippinglabel_pypi import (
 						id="markers",
 						),
 				pytest.param(
+						'pyreadline @ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"',
+						1,
+						'pyreadline@ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"\n',
+						id="url_37",
+						marks=only_version(3.7),
+						),
+				pytest.param(
 						'pyreadline@ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"',
 						1,
 						'pyreadline @ https://github.com/domdfcoding/3.10-Wheels/raw/936f0570b561f3cda0be94d93066a11c6fe782f1/pyreadline-2.0-py3-none-any.whl ; python_version == "3.10" and platform_system == "Windows"\n',
 						id="url",
+						marks=min_version(3.8),
 						),
 				],
 		)
