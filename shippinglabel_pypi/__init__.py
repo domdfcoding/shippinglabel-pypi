@@ -36,10 +36,12 @@ Shippinglabel extension for interacting with the Python Package Index (PyPI)..
 # stdlib
 import atexit
 import pathlib
-from typing import Any, Callable, Dict, List, Tuple, Union
+from collections import defaultdict
+from typing import Any, Callable, Dict, List, NamedTuple, Optional, Set, Tuple, Union
 
 # 3rd party
 import dist_meta.distributions
+import pypi_simple
 import requests
 from apeye.requests_url import RequestsURL
 from apeye.url import URL
@@ -48,6 +50,7 @@ from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from packaging.specifiers import SpecifierSet
 from packaging.tags import Tag, sys_tags
+from packaging.utils import parse_wheel_filename
 from packaging.version import Version
 from pypi_json import FileURL, PyPIJSON
 from shippinglabel import normalize
@@ -72,6 +75,8 @@ __all__ = (
 		"get_sdist_url",
 		"get_wheel_url",
 		"get_wheel_tag_mapping",
+		"wheel_python_versions",
+		"WheelPythonVersions",
 		)
 
 _session = requests.session()
@@ -140,11 +145,72 @@ def get_metadata(pypi_name: str) -> Dict[str, Any]:
 		return client.get_metadata(pypi_name)._asdict()
 
 
-def get_latest(pypi_name: str) -> str:
+class WheelPythonVersions(NamedTuple):
 	"""
-	Returns the version number of the latest release on PyPI for the given project.
+	Return type of :func:`~.wheel_python_versions`.
+	"""
+
+	#: Mapping of tags to a set of Versions
+	wheel_tag_map: Dict[Tag, Set[Version]]
+
+	#: Mapping of Python versions to a set of wheel Versions
+	wheel_version_map: Dict[Optional[SpecifierSet], Set[Version]]
+
+
+def wheel_python_versions(pypi_name: str) -> WheelPythonVersions:
+	"""
+	Returns mappings given the supported Python versions for each version and wheel tag of the given project.
 
 	:param pypi_name:
+
+	:rtype:
+
+	.. versionadded:: 0.3.0
+	"""
+
+	# Mapping of tags to a set of Versions
+	wheel_tag_map: Dict[Tag, Set[Version]] = defaultdict(set)
+
+	# Mapping of Python versions to a set of wheel Versions
+	wheel_version_map: Dict[Optional[SpecifierSet], Set[Version]] = defaultdict(set)
+
+	with pypi_simple.PyPISimple(session=_session) as client:
+		file: pypi_simple.DistributionPackage
+		page = client.get_project_page(pypi_name)
+
+		if page is None:
+			project_files = []
+		else:
+			project_files = page.packages
+
+		for file in project_files:
+
+			if not file.is_yanked:
+				if file.package_type == "wheel":
+					_, version, _, wheel_tags = parse_wheel_filename(file.filename)
+
+					for tag in wheel_tags:
+						wheel_tag_map[tag].add(version)
+
+					if file.requires_python:
+						wheel_version_map[SpecifierSet(file.requires_python)].add(version)
+					else:
+						wheel_version_map[None].add(version)
+
+	return WheelPythonVersions(
+			wheel_tag_map=wheel_tag_map,
+			wheel_version_map=wheel_version_map,
+			)
+
+
+def get_latest(pypi_name: str, minimum_py_version: Union[str, Version, None] = None) -> str:
+	"""
+	Returns the version number of the latest (compatible) release on PyPI for the given project.
+
+	:param pypi_name:
+	:param minimum_py_version: Optionally, a minimum Python version that must be supported.
+
+	.. versionchanged:: 0.3.0  Added ``minimum_py_version`` option.
 
 	:raises:
 
@@ -152,7 +218,20 @@ def get_latest(pypi_name: str) -> str:
 		* :exc:`requests.HTTPError` if an error occurs when communicating with PyPI.
 	"""
 
-	return str(get_metadata(pypi_name)["info"]["version"])
+	if not minimum_py_version:
+		return str(get_metadata(pypi_name)["info"]["version"])
+
+	else:
+		if not isinstance(minimum_py_version, Version):
+			minimum_py_version = Version(minimum_py_version)
+
+		# Project versions that support the given Python version; sorting these will give the latest release
+		possible_versions: List[Version] = []
+		for py_specifier, pkg_versions in wheel_python_versions(pypi_name).wheel_version_map.items():
+			if py_specifier is None or minimum_py_version in py_specifier:
+				possible_versions.append(max(pkg_versions))
+
+		return str(max(possible_versions))
 
 
 def bind_requirements(

@@ -14,7 +14,7 @@ from pytest_regressions.data_regression import RegressionYamlDumper
 # this package
 from shippinglabel_pypi import _session
 
-pytest_plugins = ("coincidence", )
+pytest_plugins = ("coincidence", "tests.yaml_packaging")
 
 _C = TypeVar("_C", bound=Callable)
 
@@ -30,7 +30,7 @@ def cassette(request: FixtureRequest) -> Iterator[requests.Session]:
 	"""  # noqa: D400
 
 	with Betamax(_session) as vcr:
-		vcr.use_cassette(request.node.name, record="none")
+		vcr.use_cassette(request.node.name, record="none", allow_playback_repeats=True)
 
 		yield _session
 

@@ -27,7 +27,8 @@ from shippinglabel_pypi import (
 		get_releases_with_digests,
 		get_sdist_url,
 		get_wheel_tag_mapping,
-		get_wheel_url
+		get_wheel_url,
+		wheel_python_versions
 		)
 
 
@@ -247,9 +248,21 @@ def test_get_file_from_pypi(advanced_data_regression: AdvancedDataRegressionFixt
 		advanced_data_regression.check(sorted({f.name for f in tar.getmembers()}))
 
 
-@pytest.mark.usefixtures("module_cassette")
+@pytest.mark.usefixtures("cassette")
 def test_get_latest():
 	assert get_latest("octocheese") == "0.7.0"
+
+	assert get_latest("click") == "8.3.1"
+	assert get_latest("click", "3.4") == "7.0"
+	assert get_latest("click", "3.5") == "7.1.2"
+	assert get_latest("click", "3.6") == "8.0.4"
+	assert get_latest("click", "3.7") == "8.1.8"
+	assert get_latest("click", "3.8") == "8.1.8"
+	assert get_latest("click", "3.9") == "8.1.8"
+	assert get_latest("click", "3.10") == "8.3.1"
+	assert get_latest("click", "3.11") == "8.3.1"
+	assert get_latest("click", "3.12") == "8.3.1"
+	assert get_latest("click", "3.13") == "8.3.1"
 
 
 @pytest.mark.usefixtures("module_cassette")
@@ -404,3 +417,17 @@ def test_get_wheel_tag_mapping_no_files(name: str, version: str):
 		)
 def test_get_project_links(advanced_data_regression: AdvancedDataRegressionFixture, project: str):
 	advanced_data_regression.check(dict(get_project_links(project)))
+
+
+@pytest.mark.parametrize("package", ["domdf_python_tools", "click", "numpy", "sphinx"])
+@pytest.mark.usefixtures("cassette")
+def test_wheel_python_versions(package: str, advanced_data_regression: AdvancedDataRegressionFixture):
+	data = wheel_python_versions(package)._asdict()
+
+	data["wheel_tag_map"] = {str(k): sorted(v) for k, v in data["wheel_tag_map"].items()}
+	data["wheel_version_map"] = {str(k): sorted(v) for k, v in data["wheel_version_map"].items()}
+
+	data["wheel_tag_map"] = dict(sorted(data["wheel_tag_map"].items()))
+	data["wheel_version_map"] = dict(sorted(data["wheel_version_map"].items()))
+
+	advanced_data_regression.check(data)
