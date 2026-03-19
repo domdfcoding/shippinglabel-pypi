@@ -62,7 +62,7 @@ __license__: str = "MIT License"
 __email__: str = "dominic@davis-foster.co.uk"
 
 #: The version number of this extension.
-__version__: str = "0.3.0"
+__version__: str = "0.4.0"
 
 __all__ = (
 		"get_project_links",
