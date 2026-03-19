@@ -149,6 +149,35 @@ def test_bind_requirements(input_s: str, expected_retval: int, output: str, tmp_
 	assert path.read_text() == output
 
 
+@pytest.mark.parametrize(
+		"minimum_py_version",
+		[
+				pytest.param("3.4", id="py34"),
+				pytest.param("3.5", id="py35"),
+				pytest.param("3.6", id="py36"),
+				pytest.param("3.7", id="py37"),
+				pytest.param("3.8", id="py38"),
+				pytest.param("3.9", id="py39"),
+				pytest.param("3.10", id="py310"),
+				pytest.param("3.11", id="py311"),
+				pytest.param("3.12", id="py312"),
+				pytest.param("3.13", id="py313"),
+				],
+		)
+@pytest.mark.usefixtures("cassette")
+def test_bind_requirements_min_py(
+		tmp_pathplus: PathPlus,
+		minimum_py_version: str,
+		advanced_file_regression: AdvancedFileRegressionFixture,
+		):
+	path = tmp_pathplus / "requirements.txt"
+	path.write_text("click\nnumpy\ndomdf-python-tools\n")
+
+	assert bind_requirements(path, minimum_py_version=minimum_py_version) == 1
+
+	advanced_file_regression.check_file(path)
+
+
 def test_bind_requirements_error(tmp_pathplus: PathPlus):
 	path = tmp_pathplus / "requirements.txt"
 	path.write_text('bar\npkg-resources==0.0.0\ndocutils\n')

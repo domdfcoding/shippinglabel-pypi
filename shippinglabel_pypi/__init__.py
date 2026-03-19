@@ -238,6 +238,7 @@ def bind_requirements(
 		filename: PathLike,
 		specifier: str = ">=",
 		normalize_func: Callable[[str], str] = normalize,
+		minimum_py_version: Union[str, Version, None] = None,
 		) -> int:
 	"""
 	Bind unbound requirements in the given file to the latest version on PyPI, and any later versions.
@@ -245,8 +246,11 @@ def bind_requirements(
 	:param filename: The requirements.txt file to bind requirements in.
 	:param specifier: The requirement specifier symbol to use.
 	:param normalize_func: Function to use to normalize the names of requirements.
+	:param minimum_py_version: Optionally, a minimum Python version that must be supported.
 
 	:return: ``1`` if the file was changed; ``0`` otherwise.
+
+	.. versionchanged:: 0.4.0  Added ``minimum_py_version`` argument.
 	"""
 
 	if specifier not in operator_symbols:
@@ -266,7 +270,7 @@ def bind_requirements(
 
 		if not req.specifier:
 			ret |= 1
-			req.specifier = SpecifierSet(f"{specifier}{get_latest(req.name)}")
+			req.specifier = SpecifierSet(f"{specifier}{get_latest(req.name, minimum_py_version)}")
 
 	sorted_requirements = sorted(requirements)
 
