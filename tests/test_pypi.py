@@ -18,6 +18,7 @@ from shippinglabel.requirements import operator_symbols
 
 # this package
 from shippinglabel_pypi import (
+		NoCompatibleVersions,
 		bind_requirements,
 		get_file_from_pypi,
 		get_latest,
@@ -292,6 +293,12 @@ def test_get_latest():
 	assert get_latest("click", "3.11") == "8.3.1"
 	assert get_latest("click", "3.12") == "8.3.1"
 	assert get_latest("click", "3.13") == "8.3.1"
+
+	with pytest.raises(
+			NoCompatibleVersions,
+			match="No versions of folium-about-button are compatible with Python 3.9",
+			):
+		get_latest("folium-about-button", "3.9")
 
 
 @pytest.mark.usefixtures("module_cassette")

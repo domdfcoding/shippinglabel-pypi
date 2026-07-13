@@ -540,6 +540,128 @@
 				"url": "https://pypi.org/simple/click/"
 			},
 			"recorded_at": "2026-03-18T16:34:42"
+		},
+		{
+			"request": {
+				"body": {
+					"encoding": "utf-8",
+					"string": ""
+				},
+				"headers": {
+					"User-Agent": [
+						"python-requests/2.32.4"
+					],
+					"Accept-Encoding": [
+						"gzip, deflate"
+					],
+					"Accept": [
+						"application/vnd.pypi.simple.v1+json, application/vnd.pypi.simple.v1+html, text/html;q=0.01"
+					],
+					"Connection": [
+						"keep-alive"
+					]
+				},
+				"method": "GET",
+				"uri": "https://pypi.org/simple/folium-about-button/"
+			},
+			"response": {
+				"body": {
+					"encoding": null,
+					"base64_string": "H4sIAAAAAAAC/7VVTY8jNRC9z6/oDRK3TvujXLaXJBKCPSCtxAq4cFqVXeVJ2Ex36PYsCr8eZzIrIdgv7cCh1V/l8qv36pU3z77/8btffn31otvXu+PuZnO5dUcab7crGVe7m67b7IX48tAe76RSN9KdbFen8+nwfJbTtBzqNJ/7tzIvh2lcdXkaq4x1u9JraAn+teY0T79Jrv1Sqd4vf4unXA9vZbV72Kke6lF2Lw/jm6Ur09yu4+H+rqc03dc+3dc6jZvhGnTBOLwDuUkTnx/R7vWnErSImw11+1nKdrWv9bQ8H4ZyOMqyPp3rfhr301KF19N8O5wov6FbWQbtB4xDNOCNl2RyCT6xszGrxBCcQbDgA2TCpENBykxBoyErhlMg1DRcwbx+APP6CqZXa71W/els+3EapafxvP5jf/xq2ZNxuNUFkgCnWJIjF5MgObQMRrOVIhmYjChKIYD2EElpxBxURGo/FbhVx1Spn+X3+8MsS38tb7v6+rZ+s7VrrR4D+LDU/jCWqb/odvm0XT1CwOSy8+ikWNcqtIyKrRPWOkUsOopKlC0KlugUmQIxFhV90Y2ooh097pCnWf6H5LvP53Qz0G6T5m74AvFBDVENFwF8ZqQINjBDEdtkDRxBSXYWYxAbnc6tDygyW50QmDGlaP2HxV9Xmte3f76TXDEAUUsVCoAGiLaYkqJSqtVuI0kOOcSUVDaYDYgETMEam1pjSMj6MyTffQrLU6hCNUgZbAIOpTBBUOxyM4c3wRbWnAWz0iScS0IbvKdggJGNh8w6+bb+/fDMR3wSFWmBwhygeJe45UWlM3vf7IlGsbFQwLSw4sUq0K3pYuOYJJUkWf4Dn2TMSWkNbU8wmLJuxodolNNG2nR4eEmtdxsX7CJGHSGLp2btUkxI5qM+eXLy3edz+hTxIw8xDpi81dicQNoTKbo4VpwjBSFYbBNNQoJkc9OIjGEQbjWkaC5afVj8f/gEU/Od8941DghDsqKtd8pmR8ikTQoobZxcRrXC0GYwACigNlQIPRn8cp+Y9/pkuB5B7XS5HqnP+v7nFz/98O3LzvpGhkLd97u/AM6AXbp5BwAA"
+				},
+				"headers": {
+					"Connection": [
+						"keep-alive"
+					],
+					"Content-Length": [
+						"819"
+					],
+					"content-encoding": [
+						"gzip"
+					],
+					"access-control-expose-headers": [
+						"X-PyPI-Last-Serial"
+					],
+					"server": [
+						"gunicorn"
+					],
+					"access-control-max-age": [
+						"86400"
+					],
+					"content-security-policy": [
+						"default-src 'none'; sandbox allow-top-navigation"
+					],
+					"access-control-allow-headers": [
+						"Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since"
+					],
+					"cache-control": [
+						"max-age=600, public"
+					],
+					"x-pypi-last-serial": [
+						"37169061"
+					],
+					"etag": [
+						"\"wCaUzc1iXkqc/WjpeD7Gpw\""
+					],
+					"access-control-allow-origin": [
+						"*"
+					],
+					"referrer-policy": [
+						"origin-when-cross-origin"
+					],
+					"access-control-allow-methods": [
+						"GET"
+					],
+					"Accept-Ranges": [
+						"bytes"
+					],
+					"Date": [
+						"Mon, 13 Jul 2026 10:54:22 GMT"
+					],
+					"X-Served-By": [
+						"cache-iad-kcgs7200163-IAD, cache-iad-kcgs7200150-IAD, cache-lcy-eglc8600048-LCY"
+					],
+					"X-Cache": [
+						"MISS, HIT, HIT"
+					],
+					"X-Cache-Hits": [
+						"0, 19, 0"
+					],
+					"X-Timer": [
+						"S1783940062.375861,VS0,VE76"
+					],
+					"Content-Type": [
+						"application/vnd.pypi.simple.v1+html"
+					],
+					"Vary": [
+						"Accept, Accept-Encoding"
+					],
+					"Strict-Transport-Security": [
+						"max-age=31536000; includeSubDomains; preload"
+					],
+					"X-Frame-Options": [
+						"deny"
+					],
+					"X-XSS-Protection": [
+						"1; mode=block"
+					],
+					"X-Content-Type-Options": [
+						"nosniff"
+					],
+					"X-Permitted-Cross-Domain-Policies": [
+						"none"
+					],
+					"Permissions-Policy": [
+						"publickey-credentials-create=(self),publickey-credentials-get=(self),accelerometer=(),ambient-light-sensor=(),autoplay=(),battery=(),camera=(),display-capture=(),document-domain=(),encrypted-media=(),execution-while-not-rendered=(),execution-while-out-of-viewport=(),fullscreen=(),gamepad=(),geolocation=(),gyroscope=(),hid=(),identity-credentials-get=(),idle-detection=(),local-fonts=(),magnetometer=(),microphone=(),midi=(),otp-credentials=(),payment=(),picture-in-picture=(),screen-wake-lock=(),serial=(),speaker-selection=(),storage-access=(),usb=(),web-share=(),xr-spatial-tracking=()"
+					]
+				},
+				"status": {
+					"code": 200,
+					"message": "OK"
+				},
+				"url": "https://pypi.org/simple/folium-about-button/"
+			},
+			"recorded_at": "2026-07-13T10:54:22"
 		}
 	],
 	"recorded_with": "betamax/0.8.1"

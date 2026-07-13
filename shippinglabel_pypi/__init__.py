@@ -75,6 +75,8 @@ __all__ = (
 		"get_sdist_url",
 		"get_wheel_url",
 		"get_wheel_tag_mapping",
+		"NoCompatibleVersions",
+		"ProjectLinks",
 		"wheel_python_versions",
 		"WheelPythonVersions",
 		)
@@ -203,6 +205,25 @@ def wheel_python_versions(pypi_name: str) -> WheelPythonVersions:
 			)
 
 
+class NoCompatibleVersions(ValueError):
+	"""
+	Exception to indicate no compatible versions of a package were found on PyPI.
+
+	:param pypi_name:
+	:param minimum_py_version: The minimum Python version that must be supported.
+
+	.. versionadded:: 0.5.0
+	"""
+
+	pypi_name: str
+	minimum_py_version: Version
+
+	def __init__(self, pypi_name: str, minimum_py_version: Version):
+		super().__init__(f"No versions of {pypi_name} are compatible with Python {minimum_py_version}")
+		self.pypi_name = pypi_name
+		self.minimum_py_version = minimum_py_version
+
+
 def get_latest(pypi_name: str, minimum_py_version: Union[str, Version, None] = None) -> str:
 	"""
 	Returns the version number of the latest (compatible) release on PyPI for the given project.
@@ -211,11 +232,13 @@ def get_latest(pypi_name: str, minimum_py_version: Union[str, Version, None] = N
 	:param minimum_py_version: Optionally, a minimum Python version that must be supported.
 
 	.. versionchanged:: 0.3.0  Added ``minimum_py_version`` option.
+	.. versionchanged:: 0.5.0  Can now also raise :exc:`NoCompatibleVersions`.
 
 	:raises:
 
 		* :exc:`packaging.requirements.InvalidRequirement` if the project cannot be found on PyPI.
 		* :exc:`requests.HTTPError` if an error occurs when communicating with PyPI.
+		* :exc:`NoCompatibleVersions` if ``minimum_py_version`` was specified but no compatible package versions were found on PyPI.
 	"""
 
 	if not minimum_py_version:
@@ -230,6 +253,9 @@ def get_latest(pypi_name: str, minimum_py_version: Union[str, Version, None] = N
 		for py_specifier, pkg_versions in wheel_python_versions(pypi_name).wheel_version_map.items():
 			if py_specifier is None or minimum_py_version in py_specifier:
 				possible_versions.append(max(pkg_versions))
+
+		if not possible_versions:
+			raise NoCompatibleVersions(pypi_name, minimum_py_version)
 
 		return str(max(possible_versions))
 
