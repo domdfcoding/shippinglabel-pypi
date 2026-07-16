@@ -48,7 +48,7 @@ from apeye.url import URL
 from dist_meta.metadata_mapping import MetadataMapping
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
-from packaging.specifiers import SpecifierSet
+from packaging.specifiers import InvalidSpecifier, SpecifierSet
 from packaging.tags import Tag, sys_tags
 from packaging.utils import parse_wheel_filename
 from packaging.version import Version
@@ -194,7 +194,13 @@ def wheel_python_versions(pypi_name: str) -> WheelPythonVersions:
 						wheel_tag_map[tag].add(version)
 
 					if file.requires_python:
-						wheel_version_map[SpecifierSet(file.requires_python)].add(version)
+						try:
+							specifier = SpecifierSet(file.requires_python)
+						except InvalidSpecifier:
+							continue
+
+						wheel_version_map[specifier].add(version)
+
 					else:
 						wheel_version_map[None].add(version)
 

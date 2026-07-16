@@ -455,7 +455,7 @@ def test_get_project_links(advanced_data_regression: AdvancedDataRegressionFixtu
 	advanced_data_regression.check(dict(get_project_links(project)))
 
 
-@pytest.mark.parametrize("package", ["domdf_python_tools", "click", "numpy", "sphinx"])
+@pytest.mark.parametrize("package", ["domdf_python_tools", "click", "numpy", "sphinx", "cachecontrol"])
 @pytest.mark.usefixtures("cassette")
 def test_wheel_python_versions(package: str, advanced_data_regression: AdvancedDataRegressionFixture):
 	data = wheel_python_versions(package)._asdict()
