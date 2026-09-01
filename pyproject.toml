@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "shippinglabel-pypi"
-version = "0.5.1"
+version = "0.5.2"
 description = "Shippinglabel extension for interacting with PyPI."
 readme = "README.rst"
 keywords = [ "packaging", "pypi", "requirements", "shippinglabel",]
