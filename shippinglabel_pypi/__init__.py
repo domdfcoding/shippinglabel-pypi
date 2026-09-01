@@ -262,7 +262,15 @@ def get_latest(pypi_name: str, minimum_py_version: Union[str, Version, None] = N
 		if not possible_versions:
 			raise NoCompatibleVersions(pypi_name, minimum_py_version)
 
-		return str(max(possible_versions))
+		possible_versions = sorted(possible_versions, reverse=True)
+
+		# Return a non-prerelease version if possible.
+		# Might be that only prereleases support the required Python version.
+		for v in possible_versions:
+			if not v.is_prerelease:
+				return str(v)
+
+		return str(possible_versions[0])
 
 
 def bind_requirements(
